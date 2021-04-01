@@ -6,9 +6,5 @@
 {% endfor %}
 </ul>
 
-<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+<a href="/{{question.id}}/">">Vote again?</a>
 
-<form action='logout/' method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Logout"/>
-</form>
