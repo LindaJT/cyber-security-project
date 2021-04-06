@@ -5,11 +5,28 @@ from django.template import loader
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import Question, Choice
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 
 def logout(request):
     logout(request)
     return redirect('/accounts/login')
+
+def register(request):
+    if request.method == 'POST':
+        f = UserCreationForm(request.POST)
+        if f.is_valid():
+            f.save()
+            username = f.cleaned_data.get('username')
+            password = f.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('index')
+
+    else:
+        f = UserCreationForm()
+
+    return render(request, 'registration/register.html', {'form': f})
 
 @login_required
 def index(request):
