@@ -52,6 +52,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'security_project.urls'
+SESSION_ENGINE = 'security_project.simplesession'
 
 TEMPLATES = [
     {
