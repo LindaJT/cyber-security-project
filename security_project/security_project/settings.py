@@ -53,6 +53,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'security_project.urls'
 SESSION_ENGINE = 'security_project.simplesession'
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 TEMPLATES = [
     {
@@ -90,16 +91,11 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',
+]
+
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },

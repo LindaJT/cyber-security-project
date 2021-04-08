@@ -4,9 +4,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .models import Question, Choice
+from .models import Question, Choice, Comment
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
+from django.contrib import messages
+import sqlite3
 
 def logout(request):
     logout(request)
@@ -27,6 +29,17 @@ def register(request):
         f = UserCreationForm()
 
     return render(request, 'registration/register.html', {'form': f})
+
+@login_required
+def comment(request):
+    if request.method == 'POST':
+        comment = request.POST.get("Comment", "")
+        conn = sqlite3.connect('db.sqlite3')
+        cur = conn.cursor()
+        sql = ("INSERT INTO polls_comment VALUES ('1', '" + str(comment) + "')")
+        cur.execute(sql)
+        messages.success(request, "Thank you for your feedback!")
+    return redirect('index')
 
 @login_required
 def index(request):
